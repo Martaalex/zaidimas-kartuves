@@ -1,5 +1,95 @@
-.app{
-   
-    width:100%;
-    margin:0 auto;
+body{
+  font-family: 'Amatic SC', cursive;
+  margin: 0;
+
+  background-color: rgb(41, 233, 201);
+}
+
+.covercont {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem 4rem 2rem 4rem;
+  justify-content: space-around;
+}
+
+#board{
+  display: flex;
+  justify-content: center;
+  width: 300px;
+  height: 300px;
+}
+
+#app{
+  text-align: center;
+    padding-top: 4rem;
+}
+  
+  canvas{
+    border: 1px dashed  rgba(1, 39, 46, 0.685);
+    background-color: azure;
   }
+  
+  .letter{
+    color: #29e9c9;
+    background-color: rgba(192, 64, 156, 0.767);
+    background-image: none;
+    border-color: 0.5px solid hsl(171, 53%, 86%);
+    border: #ffffff8f 1px solid;
+    width: 4rem;
+    font-family:'Amatic SC', cursive;
+    font-size: 25px;
+    font-weight: 600;
+    height: 4rem;
+    margin: 5px;
+    border-radius: 10px;
+}
+  
+.letter:hover{
+  color: rgba(192, 64, 156, 0.767);
+  background-color: rgba(64, 188, 192, 0.11);
+  border-color:0.5px solid hsl(180, 33%, 99%);;
+}
+.letter:disabled,
+.letter[disabled]{
+  border: 1px solid #99999900;
+  background-color: #cccccc00;
+  color: rgba(192, 64, 156, 0.767);
+}
+#start{
+  position: absolute;
+  top: 20rem;
+    width: 100px;
+    height: 50px;
+    font-size: 130%;
+    border: solid 1px white;
+    border-radius: 10px;
+    background-color: #fefefe;
+    text-transform: uppercase;
+    font-family: 'Josefin Slab', serif;
+    transition: background-color 0.5s ease-in;
+}
+#start:hover{
+  background-color: #fefefe00;
+  color:rgba(255, 255, 255, 0.911);
+}
+
+#restart{
+  width: 100px;
+  height: 50px;
+  font-size: 130%;
+  border: solid 1px white;
+  border-radius: 10px;
+  background-color: #fefefe;
+  text-transform: uppercase;
+  font-family: 'Josefin Slab', serif;
+  transition: background-color 0.5s ease-out;
+}
+#restart:hover{
+background-color: #fefefe00;
+color:rgba(255, 255, 255, 0.911);
+}
+
+#app div{
+ margin:2rem;
+ font-size: 50px;
+}

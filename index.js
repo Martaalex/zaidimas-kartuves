@@ -1,3 +1,5 @@
+
+
 var started = false;
 var randomZodis = '';
 var answerArray = [];
@@ -9,6 +11,12 @@ const zodziuArr = ['Miestas', 'Mašina', 'Mokykla', 'Daina', 'Vaivorykštė', 'P
 
 var alphabet = ['A', 'Ą', 'B', 'C', 'Č', 'D', 'E', 'Ę', 'Ė', 'F', 'G', 'H', 'I', 'Į', 'Y', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'Š', 'T', 'U', 'Ų', 'Ū', 'V', 'Z', 'Ž'];
 
+
+var clickSound = document.getElementById("mySound");
+var bgm = document.getElementById("myAudio");
+
+
+
 var buttons = () => {
   var myButtons = document.getElementById('buttons');
   var letters = document.createElement('div');
@@ -18,11 +26,12 @@ var buttons = () => {
    var list = document.createElement('button');
     list.className = 'letter';
     list.value = alphabet[i];
-
+   
     list.addEventListener('click', spejimas => { 
+      clickSound.play();
      let count = 0;
      spejimas.target.setAttribute('disabled',true);
-     console.log(spejimas)
+     console.log(spejimas);
       randomZodis.toUpperCase().split('').forEach((raide, index) => {
       if (raide.indexOf(spejimas.target.value) != -1 ){ 
        answerArray[index] = raide;     
@@ -31,7 +40,8 @@ var buttons = () => {
        count++;
       }  
      if (answer === randomZodis.toUpperCase()){
-      writeAnswer.textContent = `Tu atspėjai žodį - ${answer}`;
+      writeAnswer.textContent = `Tu atspėjai žodį 😁 - ${answer}`;
+      removeBtn();
         }
      });
 
@@ -42,9 +52,10 @@ var buttons = () => {
         console.log(wrongLetter)
           }
           if (lives===0){
-            writeLives.textContent = 'Neatspejai =( , žodis buvo :' + randomZodis ;
+            writeLives.textContent = 'Neatspejai 🙁, žodis buvo :' + randomZodis ;
             removeBtn();
-           // playAgain();
+            bgm.pause();
+            bgm.currentTime = 0;
           }
      })
     list.textContent = alphabet[i];
@@ -59,15 +70,27 @@ const removeBtn = () =>{
 }
 
 const app = document.getElementById('app');
-
+const covercont =document.querySelector('.covercont');
 const startBtn = document.createElement('button');
 startBtn.setAttribute("id", "start");
 startBtn.textContent = 'start';
-app.appendChild(startBtn);
+covercont.appendChild(startBtn);
 startBtn.addEventListener('click', randomNumber);
 
+
+function drawingCanva(){
+  var canva = document.createElement('canvas');
+var board = document.getElementById('board');
+var c = canva.getContext('2d');
+c.fillText("Hello World",10,50);
+canva.width  = board.offsetWidth;
+canva.height = board.offsetHeight;
+console.log(canva);
+board.appendChild(canva); 
+}
+
 function randomNumber() {
-  randomZodis = zodziuArr[Math.floor(Math.random() * zodziuArr.length)];
+   randomZodis = zodziuArr[Math.floor(Math.random() * zodziuArr.length)];
   for (var i = 0; i < randomZodis.length; i++) {
     answerArray[i] = " _ ";
   }
@@ -77,14 +100,18 @@ function randomNumber() {
 
    buttons();
    startBtn.style.display = 'none';
-   restartBtn.style.display = 'block';
+   restartBtn.style.display = 'inline-flex';
   }
   started=true;
-  
+
+  bgm.loop = true;
+  bgm.play();
+  drawingCanva();
 };
 
 const restart = () =>{
-  
+  location.reload();
+  bgm.pause();
 };
 
 const restartBtn = document.createElement('button');
@@ -95,9 +122,10 @@ restartBtn.style.display = 'none';
 restartBtn.addEventListener('click', restart) 
 
 
-  var writeAnswer = document.createElement('div');
+var writeAnswer = document.createElement('div');
 app.appendChild(writeAnswer);            
-var writeLives = document.createElement('div');
-app.appendChild(writeLives);    
 
+var writeLives = document.createElement('div');
+
+app.appendChild(writeLives);    
 
