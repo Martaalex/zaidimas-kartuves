@@ -72,8 +72,7 @@ body{
   background-color: #fefefe00;
   color:rgba(255, 255, 255, 0.911);
 }
-
-#restart{
+#hint, #restart{
   width: 100px;
   height: 50px;
   font-size: 130%;
@@ -82,8 +81,15 @@ body{
   background-color: #fefefe;
   text-transform: uppercase;
   font-family: 'Josefin Slab', serif;
+  margin: 4px;
+    justify-content: center;
   transition: background-color 0.5s ease-out;
 }
+
+#hint:hover{
+  background-color: #fefefe00;
+  color:rgba(255, 255, 255, 0.911);
+  }
 #restart:hover{
 background-color: #fefefe00;
 color:rgba(255, 255, 255, 0.911);

@@ -7,7 +7,9 @@ var wrongLetter = [];
 var answer = '';
 var lives = 5;
 
-const zodziuArr = ['Miestas', 'Mašina', 'Mokykla', 'Daina', 'Vaivorykštė', 'Pilis', 'Pelėda', 'Katinas', 'Kopūstai', 'Kamštis', 'Voverė', 'Laivas', 'Enciklopėdija', 'Pasaulis', 'Striukė', 'Parmezanas'];
+
+const zodziuArr = ['Miestas', 'Mašina', 'Mokykla', 'Šuo', 'Vaivorykštė', 'Pilis', 'Pelėda', 'Katinas', 'Voverė', 'Laivas', 'Enciklopėdija', 'Pasaulis', 'Striukė', 'Parmezanas'];
+const zodziuUzuominos = ['Vieta kur daug šurmulio', 'Transporto priemonė', 'Mokslo įstaiga', 'Geriausias žmogaus draugas', 'Įvairiaspalvė', 'Senovinis pastatas', 'Paukštis', 'Žmonės nuo senu laiku jam tarnauja :D', 'Turi gražią uodegą', 'Vandens transportas', 'Viską žino ... ', 'Tu mano visas ...', 'Nešiojame kai yra šalta', 'Sūrio pavadinimas'];
 
 var alphabet = ['A', 'Ą', 'B', 'C', 'Č', 'D', 'E', 'Ę', 'Ė', 'F', 'G', 'H', 'I', 'Į', 'Y', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'Š', 'T', 'U', 'Ų', 'Ū', 'V', 'Z', 'Ž'];
 
@@ -42,6 +44,7 @@ var buttons = () => {
      if (answer === randomZodis.toUpperCase()){
       writeAnswer.textContent = `Tu atspėjai žodį 😁 - ${answer}`;
       removeBtn();
+      bgm.pause();
         }
      });
 
@@ -49,14 +52,14 @@ var buttons = () => {
         wrongLetter.push(spejimas.target.value);
         lives--;
         writeLives.textContent = 'Tu turi dar ' + lives + ' bandymus.' ;
-        console.log(wrongLetter)
+        animate();
           }
           if (lives===0){
             writeLives.textContent = 'Neatspejai 🙁, žodis buvo :' + randomZodis ;
             removeBtn();
             bgm.pause();
-            bgm.currentTime = 0;
-          }
+       }
+       
      })
     list.textContent = alphabet[i];
     myButtons.appendChild(letters);
@@ -77,20 +80,9 @@ startBtn.textContent = 'start';
 covercont.appendChild(startBtn);
 startBtn.addEventListener('click', randomNumber);
 
-
-function drawingCanva(){
-  var canva = document.createElement('canvas');
-var board = document.getElementById('board');
-var c = canva.getContext('2d');
-c.fillText("Hello World",10,50);
-canva.width  = board.offsetWidth;
-canva.height = board.offsetHeight;
-console.log(canva);
-board.appendChild(canva); 
-}
-
 function randomNumber() {
-   randomZodis = zodziuArr[Math.floor(Math.random() * zodziuArr.length)];
+     randomNum = Math.floor(Math.random() * zodziuArr.length);
+   randomZodis = zodziuArr[randomNum];
   for (var i = 0; i < randomZodis.length; i++) {
     answerArray[i] = " _ ";
   }
@@ -101,12 +93,12 @@ function randomNumber() {
    buttons();
    startBtn.style.display = 'none';
    restartBtn.style.display = 'inline-flex';
+   uzuominaBtn.style.display = 'inline-flex';
   }
   started=true;
-
+  drawingCanva();
   bgm.loop = true;
   bgm.play();
-  drawingCanva();
 };
 
 const restart = () =>{
@@ -121,6 +113,19 @@ app.appendChild(restartBtn);
 restartBtn.style.display = 'none';
 restartBtn.addEventListener('click', restart) 
 
+const uzuominaBtn = document.createElement('button');
+uzuominaBtn.setAttribute("id", "hint");
+uzuominaBtn.textContent = 'hint';
+app.appendChild(uzuominaBtn);
+uzuominaBtn.style.display = 'none';
+uzuominaBtn.addEventListener('click', hint);
+
+function hint(){
+  var uzuomina = document.createElement('h2');
+  app.appendChild(uzuomina);
+  uzuomina.textContent = "Užuomina: - " + zodziuUzuominos[randomNum];
+  uzuominaBtn.setAttribute('disabled',true);
+};
 
 var writeAnswer = document.createElement('div');
 app.appendChild(writeAnswer);            
@@ -129,3 +134,60 @@ var writeLives = document.createElement('div');
 
 app.appendChild(writeLives);    
 
+
+
+// Animate man
+var animate = function () {
+  var drawMe = lives ;
+  drawArray[drawMe]();
+}
+
+ drawingCanva = function(){
+  var stickman = document.createElement('canvas');
+  stickman.setAttribute('id', 'stickman');
+  context = stickman.getContext('2d');
+var board = document.getElementById('board');
+stickman.width  = board.offsetWidth;
+stickman.height = board.offsetHeight;
+board.appendChild(stickman);
+context.beginPath();
+context.strokeStyle = "#fefef";
+context.lineWidth = 2;
+}
+
+head = function(){
+  stickman = document.getElementById('stickman');
+  context = stickman.getContext('2d');
+  context.beginPath();
+  context.arc(60, 25, 10, 0, Math.PI*2, true);
+  context.stroke();
+}
+
+draw = function($pathFromx, $pathFromy, $pathTox, $pathToy) {
+  context.moveTo($pathFromx, $pathFromy);
+  context.lineTo($pathTox, $pathToy);
+  context.stroke();
+}
+
+frame1 = function() {
+  draw (0, 5, 70, 5);
+};
+
+frame2 = function() {
+  draw (60, 5, 60, 15);
+};
+
+torso = function() {
+  draw (60, 36, 60, 70);
+};
+
+arm = function() {
+  draw (60, 46, 100, 50);
+  draw (60, 46, 20, 50);
+};
+
+leg = function() {
+  draw (60, 70, 100, 100);
+  draw (60, 70, 20, 100);
+};
+drawArray = [leg, arm,  torso,  head, frame2, frame1];
